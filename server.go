@@ -1,27 +1,27 @@
 package main
 
 import (
-    "fmt"
-    "net/http"
+	"fmt"
 	"io/ioutil"
+	"net/http"
 	"os"
 )
 
 var tempdir = os.TempDir()
 
 func hello(w http.ResponseWriter, req *http.Request) {
-    fmt.Println("Got /hello")
-    fmt.Fprintf(w, "hello\n")
+	fmt.Println("Got /hello")
+	fmt.Fprintf(w, "hello\n")
 }
 
 func upload(w http.ResponseWriter, req *http.Request) {
-    fmt.Println("Got /upload")
+	fmt.Println("Got /upload")
 
-    for name, headers := range req.Header {
-        for _, h := range headers {
-            fmt.Printf("%v: %v\n", name, h)
-        }
-    }
+	for name, headers := range req.Header {
+		for _, h := range headers {
+			fmt.Printf("%v: %v\n", name, h)
+		}
+	}
 
 	b, err := ioutil.ReadAll(req.Body)
 	if err != nil {
@@ -45,7 +45,7 @@ func upload(w http.ResponseWriter, req *http.Request) {
 }
 
 func main() {
-    http.HandleFunc("/hello", hello)
-    http.HandleFunc("/upload", upload)
-    http.ListenAndServe(":7778", nil)
+	http.HandleFunc("/hello", hello)
+	http.HandleFunc("/upload", upload)
+	http.ListenAndServe(":7778", nil)
 }
